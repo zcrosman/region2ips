@@ -10,24 +10,7 @@ This tool generates a whitelist of CIDR subnets within a specified radius from a
 - **Whitelist Generation:** Generates a list of CIDR subnets within a specified radius from a target location.
 - **Web Interface:** Interactive web interface to set parameters and view results.
 
-## Installation
-
-1. **Clone the Repository:**
-    ```sh
-    git clone <repository_url>
-    cd <repository_directory>
-    ```
-
-2. **Install Dependencies:**
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-3. **Download Geolocation Data:**
-    - Place the `GeoLite2-City-CSV_20240220/GeoLite2-City-Blocks-IPv4.csv` file in the root directory.
-
-## Running the Web Application
-
+## Setup
 1. **Start the Flask App:**
     ```sh
     python app.py
