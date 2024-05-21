@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map Picker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="js" href="{{ url_for('static', filename='js/main.css') }}" />
+    <style>
+        #map { height: 400px; }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+    <div class="control-panel">
+        Radius: <input type="range" id="radiusSlider" min="10" max="1000" value="10"> km
+        <input type="text" id="radiusValue" value="200"> km
+    </div>
+    <div id="cidrCount" style="margin-top: 20px;">CIDR Ranges Count: 0</div>
+    <div id="limitedIndicator" style="margin-top: 10px; color: #ff0000;"></div>
+    <button id="generateWhitelistBtn">Generate Whitelist</button>
+    <div id="whitelistBox" style="margin-top: 20px; background: #f9f9f9; padding: 10px; width: 300px; height: 150px; overflow-y: scroll; border: 1px solid #ccc;">Whitelist IPs will appear here...</div>
+    <div id="loadingIndicator" style="display: none;">Loading...</div>
+
+    <a id="downloadWhitelist" href="/static/full_whitelist.txt" style="display: none;">Download Whitelist</a>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+            document.getElementById('generateWhitelistBtn').addEventListener('click', function() {
+                // Optionally show a loading indicator
+                const loadingIndicator = document.getElementById('loadingIndicator');
+                loadingIndicator.style.display = 'block';
+
+                // Disable the button to prevent multiple clicks
+                const button = document.getElementById('generateWhitelistBtn');
+                button.disabled = true;
+
+                fetch('/generate_whitelist')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Hide the loading indicator
+                        loadingIndicator.style.display = 'none';
+
+                        // Enable the button again
+                        button.disabled = false;
+
+                        // Display the count of CIDR ranges
+                        const cidrCountElement = document.getElementById('cidrCount');
+                        cidrCountElement.textContent = `CIDR Ranges Count: ${data.whitelist_len}`;
+
+                        // Display the limited indicator message if applicable
+                        const limitedIndicator = document.getElementById('limitedIndicator');
+                        limitedIndicator.textContent = data.response_indicator === 'limited' ? 'Showing limited results. (First 500 Subnets)' : '';
+
+                        // Populate the whitelist box with CIDR ranges
+                        const displayBox = document.getElementById('whitelistBox');
+                        displayBox.innerHTML = ''; // Clear previous content
+                        data.whitelist.forEach(ip => {
+                            displayBox.innerHTML += ip + '<br>';
+                        });
+
+                        // Show the download link
+                        const downloadLink = document.getElementById('downloadWhitelist');
+                        downloadLink.style.display = 'inline';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Hide loading indicator and enable the button in case of error
+                        loadingIndicator.style.display = 'none';
+                        button.disabled = false;
+                    });
+            }); 
+        var map = L.map('map').setView([36.174465, -86.767960], 7); // Initialize map
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    
+        var circle = L.circle(map.getCenter(), {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 200 * 1000 // 200 km to meters, initial radius
+        }).addTo(map);
+    
+        function updateCircleRadius(newRadiusKm) {
+            var newRadiusMeters = newRadiusKm * 1000; // Convert km to meters
+            circle.setRadius(newRadiusMeters);
+            sendRadiusUpdate(newRadiusKm); // Send radius update to /api/radius
+        }
+    
+        document.getElementById('radiusSlider').addEventListener('input', function() {
+            var newRadiusKm = this.value;
+            document.getElementById('radiusValue').value = newRadiusKm;
+            updateCircleRadius(newRadiusKm);
+        });
+    
+        document.getElementById('radiusValue').addEventListener('input', function() {
+            var newRadiusKm = this.value;
+            document.getElementById('radiusSlider').value = newRadiusKm;
+            updateCircleRadius(newRadiusKm);
+        });
+    
+        map.on('click', function(e) {
+            circle.setLatLng(e.latlng); // Move the circle to the clicked location
+    
+            // Send the location to the backend
+            fetch('/api/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    lat: e.latlng.lat,
+                    lng: e.latlng.lng,
+                    radiusKm: document.getElementById('radiusValue').value
+                }),
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch((error) => console.error('Error:', error));
+        });
+    
+        // Function to send radius update to /api/radius
+        function sendRadiusUpdate(radiusKm) {
+            fetch('/api/radius', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({radiusKm: radiusKm}),
+            })
+            .then(response => response.json())
+            .then(data => console.log('Radius update success:', data))
+            .catch(error => console.error('Error updating radius:', error));
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,260 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+
+  #map {
+    height: 70vh; /* or your preferred height */
+    width: 80vw;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 20px; /* Add space below the map */
+  }
+  
+  .control-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80vw;
+    margin-top: 20px; /* Add space above the controls if needed */
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px; /* Ensure there's space below the controls */
+  }
+  
+  .control-panel input[type="range"] {
+    width: 60%;
+  }
+  
+  .control-panel input[type="text"] {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .control-panel label {
+    font-size: 16px;
+    color: #333;
+    margin-right: 15px;
+  }
+  
+  /* Simple transition effect for input elements */
+  input[type="range"], input[type="text"] {
+    transition: all 0.3s ease;
+  }
+  
+  input[type="range"]:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  input[type="text"] {
+    margin-left: 10px;
+  }
+  
+  /* Adjust the slider thumb appearance */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+  }
+
+  /* For WebKit browsers like Chrome and Safari */
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  background: #cccccc; /* Light gray color */
+  border-radius: 1px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #007bff; /* Slider thumb color */
+  margin-top: -9px; /* Adjust this value to center the thumb over the track */
+}
+
+/* For Mozilla Firefox */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  background: #cccccc; /* Light gray color */
+  border-radius: 1px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #007bff; /* Slider thumb color */
+}
+
+/* For Microsoft Edge */
+input[type="range"]::-ms-track {
+  width: 100%;
+  height: 2px;
+  background: transparent; /* Must be transparent to remove default styling */
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: #cccccc; /* Light gray color for the part of the track filled */
+  border-radius: 1px;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: #cccccc; /* Light gray color for the part of the track unfilled */
+  border-radius: 1px;
+}
+
+input[type="range"]::-ms-thumb {
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #007bff; /* Slider thumb color */
+}
+
+/* Reset some basic elements */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
+  color: #333;
+}
+
+/* Container styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 20px;
+  width: 100%;
+}
+
+/* Map styles */
+#map {
+  height: 60vh;
+  width: 90vw;
+  max-width: 1200px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+/* Control panel styling */
+.control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  width: 90vw;
+  max-width: 1200px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+
+.control-panel input,
+.control-panel button {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* background-color: #fff; */
+  transition: border-color 0.2s;
+}
+
+.control-panel input:focus,
+.control-panel button:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Button styling */
+button {
+  cursor: pointer;
+  background-color: #007bff; /* Updated default background color */
+  /* color: #fff; */
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button:hover,
+button:focus {
+  background-color: #0056b3;
+}
+
+
+/* Loading indicator */
+#loadingIndicator {
+  display: none;
+}
+
+/* Whitelist display box */
+#whitelistBox {
+  padding: 10px;
+  width: 90vw;
+  max-width: 200px;
+  height: 150px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* CIDR Count display */
+#cidrCount {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Download link */
+#downloadWhitelist {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 15px;
+  display: none; /* Initially hidden */
+}
+
+#downloadWhitelist:hover {
+  background-color: #218838;
+}

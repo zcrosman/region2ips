@@ -1,0 +1,111 @@
+/* Reset some basic elements */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    color: #333;
+}
+
+/* Container styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+    width: 100%;
+}
+
+/* Map styles */
+#map {
+    height: 60vh;
+    width: 90vw;
+    max-width: 1200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Control panel styling */
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    width: 90vw;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+.control-panel input,
+.control-panel button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+.control-panel input:focus,
+.control-panel button:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Button styling */
+button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+button:hover,
+button:focus {
+    background-color: #0056b3;
+}
+
+/* Loading indicator */
+#loadingIndicator {
+    display: none;
+}
+
+/* Whitelist display box */
+#whitelistBox {
+    padding: 10px;
+    width: 90vw;
+    max-width: 1200px;
+    height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* CIDR Count display */
+#cidrCount {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Download link */
+#downloadWhitelist {
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+#downloadWhitelist:hover {
+    background-color: #218838;
+}
